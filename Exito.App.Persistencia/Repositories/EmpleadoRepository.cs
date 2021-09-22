@@ -4,7 +4,7 @@ using Exito.App.Dominio;
 
 namespace Exito.App.Persistencia
 {
-    class EmpleadoRepository : IEmpleadoRepository
+    public class EmpleadoRepository : IEmpleadoRepository
     {
 
         private readonly AppContext _context;
@@ -15,7 +15,9 @@ namespace Exito.App.Persistencia
         }
         public Empleado Save(Empleado empleado){
             var emp = _context.Empleados.Add(empleado);
+            // _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.Empleados ON");
             _context.SaveChanges();
+            // _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.Empleados OF");
             return emp.Entity;
         }
         public Empleado Update(Empleado empleado){

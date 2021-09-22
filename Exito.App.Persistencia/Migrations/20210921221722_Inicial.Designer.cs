@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exito.App.Persistencia.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20210921183350_Inicial")]
+    [Migration("20210921221722_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -217,6 +217,9 @@ namespace Exito.App.Persistencia.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int?>("EmpleadoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Fecha")
                         .HasColumnType("nvarchar(max)");
 
@@ -227,6 +230,8 @@ namespace Exito.App.Persistencia.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("VentaID");
+
+                    b.HasIndex("EmpleadoId");
 
                     b.ToTable("Ventas");
                 });
@@ -334,6 +339,15 @@ namespace Exito.App.Persistencia.Migrations
                     b.Navigation("Rol");
 
                     b.Navigation("Sucursal");
+                });
+
+            modelBuilder.Entity("Exito.App.Dominio.Venta", b =>
+                {
+                    b.HasOne("Exito.App.Dominio.Empleado", "Empleado")
+                        .WithMany()
+                        .HasForeignKey("EmpleadoId");
+
+                    b.Navigation("Empleado");
                 });
 
             modelBuilder.Entity("Exito.App.Dominio.VentaDetalle", b =>

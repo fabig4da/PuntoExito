@@ -51,21 +51,6 @@ namespace Exito.App.Persistencia.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ventas",
-                columns: table => new
-                {
-                    VentaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Fecha = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Total = table.Column<int>(type: "int", nullable: false),
-                    Finalizada = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ventas", x => x.VentaID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Consolas",
                 columns: table => new
                 {
@@ -124,33 +109,6 @@ namespace Exito.App.Persistencia.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VentaDetalles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    VentaID = table.Column<int>(type: "int", nullable: true),
-                    ConsolaId = table.Column<int>(type: "int", nullable: true),
-                    Cantidad = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VentaDetalles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_VentaDetalles_Consolas_ConsolaId",
-                        column: x => x.ConsolaId,
-                        principalTable: "Consolas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_VentaDetalles_Ventas_VentaID",
-                        column: x => x.VentaID,
-                        principalTable: "Ventas",
-                        principalColumn: "VentaID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "VideoJuegos",
                 columns: table => new
                 {
@@ -197,6 +155,28 @@ namespace Exito.App.Persistencia.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Ventas",
+                columns: table => new
+                {
+                    VentaID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Fecha = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Total = table.Column<int>(type: "int", nullable: false),
+                    Finalizada = table.Column<bool>(type: "bit", nullable: false),
+                    EmpleadoId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ventas", x => x.VentaID);
+                    table.ForeignKey(
+                        name: "FK_Ventas_Empleados_EmpleadoId",
+                        column: x => x.EmpleadoId,
+                        principalTable: "Empleados",
+                        principalColumn: "EmpleadoId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CompraDetalles",
                 columns: table => new
                 {
@@ -220,6 +200,33 @@ namespace Exito.App.Persistencia.Migrations
                         column: x => x.ConsolaId,
                         principalTable: "Consolas",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VentaDetalles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VentaID = table.Column<int>(type: "int", nullable: true),
+                    ConsolaId = table.Column<int>(type: "int", nullable: true),
+                    Cantidad = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VentaDetalles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_VentaDetalles_Consolas_ConsolaId",
+                        column: x => x.ConsolaId,
+                        principalTable: "Consolas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_VentaDetalles_Ventas_VentaID",
+                        column: x => x.VentaID,
+                        principalTable: "Ventas",
+                        principalColumn: "VentaID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -262,6 +269,11 @@ namespace Exito.App.Persistencia.Migrations
                 name: "IX_VentaDetalles_VentaID",
                 table: "VentaDetalles",
                 column: "VentaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ventas_EmpleadoId",
+                table: "Ventas",
+                column: "EmpleadoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VideoJuegos_ConsolaId",
