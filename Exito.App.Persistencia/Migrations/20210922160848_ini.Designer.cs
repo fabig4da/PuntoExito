@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exito.App.Persistencia.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20210921221722_Inicial")]
-    partial class Inicial
+    [Migration("20210922160848_ini")]
+    partial class ini
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,7 @@ namespace Exito.App.Persistencia.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("EmpleadoId")
+                    b.Property<int>("EmpleadoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Fecha")
@@ -57,10 +57,10 @@ namespace Exito.App.Persistencia.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CompraId")
+                    b.Property<int>("CompraId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ConsolaId")
+                    b.Property<int>("ConsolaId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -82,7 +82,7 @@ namespace Exito.App.Persistencia.Migrations
                     b.Property<string>("Almacenamiento")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ControlesId")
+                    b.Property<int>("ControlId")
                         .HasColumnType("int");
 
                     b.Property<string>("Fabricante")
@@ -111,7 +111,7 @@ namespace Exito.App.Persistencia.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ControlesId");
+                    b.HasIndex("ControlId");
 
                     b.ToTable("Consolas");
                 });
@@ -156,16 +156,19 @@ namespace Exito.App.Persistencia.Migrations
                     b.Property<string>("Apellido")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Cedula")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Clave")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RolId")
+                    b.Property<int>("RolId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SucursalId")
+                    b.Property<int>("SucursalId")
                         .HasColumnType("int");
 
                     b.Property<string>("Usuario")
@@ -217,7 +220,7 @@ namespace Exito.App.Persistencia.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("EmpleadoId")
+                    b.Property<int>("EmpleadoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Fecha")
@@ -246,17 +249,17 @@ namespace Exito.App.Persistencia.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ConsolaId")
+                    b.Property<int>("ConsolaId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VentaID")
+                    b.Property<int>("VentaId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ConsolaId");
 
-                    b.HasIndex("VentaID");
+                    b.HasIndex("VentaId");
 
                     b.ToTable("VentaDetalles");
                 });
@@ -297,7 +300,9 @@ namespace Exito.App.Persistencia.Migrations
                 {
                     b.HasOne("Exito.App.Dominio.Empleado", "Empleado")
                         .WithMany()
-                        .HasForeignKey("EmpleadoId");
+                        .HasForeignKey("EmpleadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Empleado");
                 });
@@ -306,11 +311,15 @@ namespace Exito.App.Persistencia.Migrations
                 {
                     b.HasOne("Exito.App.Dominio.Compra", "Compra")
                         .WithMany()
-                        .HasForeignKey("CompraId");
+                        .HasForeignKey("CompraId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Exito.App.Dominio.Consola", "Consola")
                         .WithMany()
-                        .HasForeignKey("ConsolaId");
+                        .HasForeignKey("ConsolaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Compra");
 
@@ -321,7 +330,9 @@ namespace Exito.App.Persistencia.Migrations
                 {
                     b.HasOne("Exito.App.Dominio.Control", "Controles")
                         .WithMany()
-                        .HasForeignKey("ControlesId");
+                        .HasForeignKey("ControlId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Controles");
                 });
@@ -330,11 +341,15 @@ namespace Exito.App.Persistencia.Migrations
                 {
                     b.HasOne("Exito.App.Dominio.Rol", "Rol")
                         .WithMany()
-                        .HasForeignKey("RolId");
+                        .HasForeignKey("RolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Exito.App.Dominio.Sucursal", "Sucursal")
                         .WithMany()
-                        .HasForeignKey("SucursalId");
+                        .HasForeignKey("SucursalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Rol");
 
@@ -345,7 +360,9 @@ namespace Exito.App.Persistencia.Migrations
                 {
                     b.HasOne("Exito.App.Dominio.Empleado", "Empleado")
                         .WithMany()
-                        .HasForeignKey("EmpleadoId");
+                        .HasForeignKey("EmpleadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Empleado");
                 });
@@ -354,11 +371,15 @@ namespace Exito.App.Persistencia.Migrations
                 {
                     b.HasOne("Exito.App.Dominio.Consola", "Consola")
                         .WithMany()
-                        .HasForeignKey("ConsolaId");
+                        .HasForeignKey("ConsolaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Exito.App.Dominio.Venta", "Venta")
                         .WithMany()
-                        .HasForeignKey("VentaID");
+                        .HasForeignKey("VentaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Consola");
 

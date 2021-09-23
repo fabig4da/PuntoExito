@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "EzSNtBoEXliIPJ9D17VTyc1YJSGnm/fMi3WG3gM8tTqcER8T4ySctVZA8YIY+OpU95Jij1AClVC3d8LdbsrNow==",
+  "dgSpecHash": "2V3YCKP87At8OWYIa5ljMQuwvk4uLgydRC4fQTGTcY16RDr29GcirwIYm8s9n0ewtsjqSfT2ecRAwzcR4BwsRA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Fabig\\work-space\\mintic\\ExitoProject\\Exito.App\\Exito.App.Dominio\\Exito.App.Dominio.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Fabig\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -2,7 +2,7 @@
 
 namespace Exito.App.Persistencia.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class ini : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -60,7 +60,7 @@ namespace Exito.App.Persistencia.Migrations
                     VelocidadRam = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VelocidadProcesamiento = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TypoDisco = table.Column<int>(type: "int", nullable: false),
-                    ControlesId = table.Column<int>(type: "int", nullable: true),
+                    ControlId = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Version = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Fabricante = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -71,11 +71,11 @@ namespace Exito.App.Persistencia.Migrations
                 {
                     table.PrimaryKey("PK_Consolas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Consolas_Controles_ControlesId",
-                        column: x => x.ControlesId,
+                        name: "FK_Consolas_Controles_ControlId",
+                        column: x => x.ControlId,
                         principalTable: "Controles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,12 +84,13 @@ namespace Exito.App.Persistencia.Migrations
                 {
                     EmpleadoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Cedula = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Usuario = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Clave = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RolId = table.Column<int>(type: "int", nullable: true),
-                    SucursalId = table.Column<int>(type: "int", nullable: true)
+                    RolId = table.Column<int>(type: "int", nullable: false),
+                    SucursalId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -99,13 +100,13 @@ namespace Exito.App.Persistencia.Migrations
                         column: x => x.RolId,
                         principalTable: "Roles",
                         principalColumn: "RolId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Empleados_Sucursales_SucursalId",
                         column: x => x.SucursalId,
                         principalTable: "Sucursales",
                         principalColumn: "SucursalId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -141,7 +142,7 @@ namespace Exito.App.Persistencia.Migrations
                     Fecha = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Total = table.Column<int>(type: "int", nullable: false),
                     Finalizada = table.Column<bool>(type: "bit", nullable: false),
-                    EmpleadoId = table.Column<int>(type: "int", nullable: true)
+                    EmpleadoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -151,7 +152,7 @@ namespace Exito.App.Persistencia.Migrations
                         column: x => x.EmpleadoId,
                         principalTable: "Empleados",
                         principalColumn: "EmpleadoId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -163,7 +164,7 @@ namespace Exito.App.Persistencia.Migrations
                     Fecha = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Total = table.Column<int>(type: "int", nullable: false),
                     Finalizada = table.Column<bool>(type: "bit", nullable: false),
-                    EmpleadoId = table.Column<int>(type: "int", nullable: true)
+                    EmpleadoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -173,7 +174,7 @@ namespace Exito.App.Persistencia.Migrations
                         column: x => x.EmpleadoId,
                         principalTable: "Empleados",
                         principalColumn: "EmpleadoId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -182,8 +183,8 @@ namespace Exito.App.Persistencia.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CompraId = table.Column<int>(type: "int", nullable: true),
-                    ConsolaId = table.Column<int>(type: "int", nullable: true),
+                    CompraId = table.Column<int>(type: "int", nullable: false),
+                    ConsolaId = table.Column<int>(type: "int", nullable: false),
                     Cantidad = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -194,13 +195,13 @@ namespace Exito.App.Persistencia.Migrations
                         column: x => x.CompraId,
                         principalTable: "Compras",
                         principalColumn: "CompraId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CompraDetalles_Consolas_ConsolaId",
                         column: x => x.ConsolaId,
                         principalTable: "Consolas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,8 +210,8 @@ namespace Exito.App.Persistencia.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    VentaID = table.Column<int>(type: "int", nullable: true),
-                    ConsolaId = table.Column<int>(type: "int", nullable: true),
+                    VentaId = table.Column<int>(type: "int", nullable: false),
+                    ConsolaId = table.Column<int>(type: "int", nullable: false),
                     Cantidad = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -221,13 +222,13 @@ namespace Exito.App.Persistencia.Migrations
                         column: x => x.ConsolaId,
                         principalTable: "Consolas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_VentaDetalles_Ventas_VentaID",
-                        column: x => x.VentaID,
+                        name: "FK_VentaDetalles_Ventas_VentaId",
+                        column: x => x.VentaId,
                         principalTable: "Ventas",
                         principalColumn: "VentaID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -246,9 +247,9 @@ namespace Exito.App.Persistencia.Migrations
                 column: "EmpleadoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Consolas_ControlesId",
+                name: "IX_Consolas_ControlId",
                 table: "Consolas",
-                column: "ControlesId");
+                column: "ControlId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Empleados_RolId",
@@ -266,9 +267,9 @@ namespace Exito.App.Persistencia.Migrations
                 column: "ConsolaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VentaDetalles_VentaID",
+                name: "IX_VentaDetalles_VentaId",
                 table: "VentaDetalles",
-                column: "VentaID");
+                column: "VentaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ventas_EmpleadoId",

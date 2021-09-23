@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Exito.App.Dominio
 {
     public class Consola : Producto
@@ -12,6 +15,10 @@ namespace Exito.App.Dominio
         public string VelocidadRam {get; set;}
         public string VelocidadProcesamiento {get; set;}
         public TypoDisco TypoDisco {get; set;}
+
+        public int ControlId {get; set;}
+        [ForeignKey("ControlId")]
+
         public Control Controles {get; set;}
         // public VideoJuego VideoJuegos {get; set;}
 

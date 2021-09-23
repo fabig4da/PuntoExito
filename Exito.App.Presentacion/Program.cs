@@ -11,8 +11,8 @@ namespace Exito.App.Presentacion
         {
            Program p = new Program();
            p.GuardarRol();
-        //    p.GuardarSucursal();
-        //    p.GuardarEmpleado();
+           p.GuardarSucursal();
+           p.GuardarEmpleado();
         }
 
 
@@ -31,18 +31,16 @@ namespace Exito.App.Presentacion
         void GuardarEmpleado(){
             EmpleadoRepository empleadoRepository = new EmpleadoRepository(this._context);
             Empleado empleado = new Empleado(){
-                Nombre = "fabian",
-                Apellido = "Garces",
-                Usuario = "111111",
-                Clave = "111111",
-                Rol = new Rol(){
-                    RolId = 2,
-                },
-                Sucursal =new Sucursal() {
-                    SucursalId = 2,
-                }
+                Nombre = "Andres",
+                Apellido = "Ramirez",
+                Usuario = "222222",
+                Clave = "222222",
+                Cedula = "222222",
+                RolId = 2,
+                SucursalId = 2
 
             };
+        
             
             empleadoRepository.Save(empleado);
         }

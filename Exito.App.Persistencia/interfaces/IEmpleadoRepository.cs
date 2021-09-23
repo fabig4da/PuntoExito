@@ -11,7 +11,6 @@ namespace Exito.App.Persistencia
         public List<Empleado> FindAll();
         public Empleado FindOne(int id);
         public bool Delete(int id);
-
         
     }
 
