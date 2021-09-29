@@ -1,98 +1,26 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using Exito.App.Dominio;
-using Exito.App.Persistencia;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Exito.App.Presentacion
 {
-    class Program
+    public class Program
     {
-        Exito.App.Persistencia.AppContext _context = new Exito.App.Persistencia.AppContext();
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Program p = new Program();
-            //    p.GuardarRol();
-            //    p.GuardarSucursal();
-            //    p.GuardarEmpleado();
-            p.guardarControl();
-            p.listarControles();
-            // p.actulizarControl();
+            CreateHostBuilder(args).Build().Run();
         }
 
-
-        void GuardarRol()
-        {
-            RolRepository rolRepository = new RolRepository(this._context);
-            Rol rol = new Rol();
-            rol.Nombre = "Administrador_Ventas";
-            rolRepository.Save(rol);
-        }
-        void GuardarSucursal()
-        {
-            SucursalRepository sucursalRepository = new SucursalRepository(this._context);
-            Sucursal sucursal = new Sucursal();
-            sucursal.Nombre = "Some sucursal";
-            sucursalRepository.Save(sucursal);
-        }
-        void GuardarEmpleado()
-        {
-            EmpleadoRepository empleadoRepository = new EmpleadoRepository(this._context);
-            Empleado empleado = new Empleado()
-            {
-                Nombre = "Andres",
-                Apellido = "Ramirez",
-                Usuario = "222222",
-                Clave = "222222",
-                Cedula = "222222",
-                RolId = 2,
-                SucursalId = 2
-
-            };
-
-
-            empleadoRepository.Save(empleado);
-        }
-
-        void guardarControl()
-        {
-            ControlRepository controlRepository = new ControlRepository(this._context);
-            Control control = new Control
-            {
-                Nombre = "Control neme",
-                Version = "1.2",
-                Fabricante = "Gamesatrt",
-                precioCompra = 90,
-                precioVenta = 30,
-                Cantidad = 3
-            };
-            controlRepository.Save(control);
-        }
-
-        void actulizarControl()
-        {
-            ControlRepository controlRepository = new ControlRepository(this._context);
-            Control control = new Control
-            {
-                Id = 1,
-                Nombre = "Control",
-                Version = "1.3",
-                Fabricante = "Gamesatrt",
-                precioCompra = 100,
-                precioVenta = 30,
-                Cantidad = 3
-            };
-
-        }
-        void listarControles()
-        {
-            ControlRepository controlRepository = new ControlRepository(this._context);
-            List<Control> controles = controlRepository.FindAll();
-            foreach (Control control in controles)
-            {
-                Console.WriteLine($"{control.Nombre} precio: {control.precioCompra}");
-
-            }
-
-        }
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }
