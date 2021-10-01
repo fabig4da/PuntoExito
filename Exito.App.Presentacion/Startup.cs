@@ -27,6 +27,14 @@ namespace Exito.App.Presentacion
         {
             services.AddRazorPages();
             services.AddDbContext<Exito.App.Persistencia.AppContext>();
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
         }
 
@@ -50,6 +58,8 @@ namespace Exito.App.Presentacion
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
