@@ -21,11 +21,15 @@ namespace Exito.App.Presentacion.Pages.CrudEmpleado
 
         public IList<Empleado> Empleado { get;set; }
 
+        public Empleado User {get; set;}
+
         public async Task OnGetAsync()
         {
             Empleado = await _context.Empleados
                 .Include(e => e.Rol)
                 .Include(e => e.Sucursal).ToListAsync();
         }
+
+        
     }
 }
