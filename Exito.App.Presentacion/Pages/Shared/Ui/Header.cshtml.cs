@@ -12,10 +12,11 @@ namespace Exito.App.Presentacion.Shared.Header
 {
     public partial class HeaderModel : PageModel
     {
-        Empleado User {get; set;}
+        Empleado User {get; set;} = new Empleado {Nombre="fabian"};
         public void OnGet()
         {
             var str = HttpContext.Session.GetString("user");
+            User = JsonConvert.DeserializeObject<Empleado>(str);
             
             
         }
